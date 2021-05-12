@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="USGS (U.S. Geological Survey) GeMS (Geologic Map Schema)">
+
+    <title>GeMS — Summary</title>
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/gems.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg text-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">GeMS — Geologic Map Schema</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+					<!--Data Dropdown-->
+					<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownDataOne" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report Breakdown</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownDataOne">
+						<a class="dropdown-item" href="background.html">Background</a>
+						<a class="dropdown-item" href="content.html">Content of a Geologic Map</a>
+						<a class="dropdown-item" href="database-design.html">Database Design</a>
+						<a class="dropdown-item" href="required.html">Required Elements</a>
+						<a class="dropdown-item" href="as-needed.html">As-Needed Elements</a>
+						<a class="dropdown-item" href="symbolization.html">Symbolization</a>
+						<a class="dropdown-item" href="references.html">References</a>
+						<a class="dropdown-item" href="appendices.html">Appendices</a>
+						</div>
+                    </li>					
+					<!--Data Dropdown-->
+					<!--Data Dropdown-->
+					<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownDataTwo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownDataTwo">
+						<a class="dropdown-item" href="summary.html">Document Summary</a>
+						<a class="dropdown-item" href="explanations.html">Explanations of Select Fields</a>
+						<a class="dropdown-item" href="tables.html">Required Content Tables</a>
+						<a class="dropdown-item" href="level-compliance.html">Levels of Compliance</a>
+						</div>
+                    </li>					
+					<!--Data Dropdown-->				
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content --> 
+	<header class="business-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 my-sm-4 pt-3 pt-sm-0 background-text">
+                    <h1 class="page-header" id="top">Summary of the GeMS Document</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+	<div class="container">
+		<div class="white-bg">
+			<h2>Background <a href="background.html"><i class="fas fa-external-link-alt"></i></a></h2>
+				<p>GeMS (<strong>Ge</strong>ologic <strong>M</strong>ap <strong>S</strong>chema) is a standardized database schema for the digital publication of geologic maps. It stipulates that an Esri database format be used to adhere to USGS policy. GeMS is designed for a single-map database, however it is intended to provide a stepping stone toward the development of multiple-map databases.</p>
+        </div>
+		<div class="white-bg">
+			<h2>Publication Package <a href="content.html#elements"><i class="fas fa-external-link-alt"></i></a></h2>
+				<p>For a digital geologic map publication named “mapXYZ”, the publication package should include the elements listed in <a href="https://github.com/usgs/gems-resources/raw/main/gems-resources/GeMS%20checklist.pdf" target="_blank">this checklist</a>. As-needed elements are mandatory only if they are part of the content of the map report. Optional elements may or may not be present, at the discretion of the author or publisher.</p>
+				<p>To make database content available without the requirement of having an ArcGIS license, now or in the future, an open shapefile version of the database is required. This version uses the well-documented shapefile and .dbf formats, which have length limitations of fields (must have &leq;255 characters) and field names (must be &leq;10 characters). The checklist describes this version and how to create it using the GeMS_TranslateToShape_Arc10.py tool.</p>
+        </div>
+		<div class="white-bg">
+			<h2>Database <a href="database-design.html"><i class="fas fa-external-link-alt"></i></a></h2>
+				<p>As with the overall digital data package, some geologic map database elements are required, some are as-needed, and some are optional. Additional optional elements are permitted.</p>
+				<p>This database design relies on relations (joins, or relationship classes) between the various feature classes and nonspatial tables.</p>
+        </div>
+		<div class="white-bg">
+			<h2>Field Hygiene <a href="database-design.html#fieldHygiene"><i class="fas fa-external-link-alt"></i></a></h2>
+				<ul>
+					<li>GeMS does not, in general, prescribe the lengths of text fields; field lengths need to be long enough to encompass all values but short enough to not unduly inflate the size of the database.</li>
+					<li>Unless otherwise noted, all fields are of data type text (=string).</li>
+					<li>It is important that required fields not be deleted, even if all values in the field are null (that is, they have no content).</li>
+					<li>When a particular instance (row value) of a field is intended to have no content, it should be set to &lt;null&gt; if the underlying database software supports an explicit &lt;null&gt; value. If the software does not support a &lt;null&gt; value, then enter a text string: use “#null” for text fields that are long (that is, ≥5 characters); use “&num;null” for text fields that are long (that is, &ge;5 characters); use “&num;” for short (&lt;5 characters) text fields. For numeric fields, do not use 0; use either −9 or −9999 (but be consistent; do not use both −9 and −9999 for null values in the same numeric field).</li>
+					<li>Fields should not be repurposed to hold other types of information. To store other attribute information in a table, you must add other fields.</li>
+					<li>The values in certain fields must be defined in the Glossary table. These fields are highlighted in magenta bold type in the tables within the GeMS document.</li>
+					<li>For most feature classes, a Notes field is prescribed; however, populating this field is always optional, and it may be omitted if desired.</li>
+					<li>All feature classes and nonspatial tables contain a primary key field that has a name in the form of TableName_ID. When values of this primary key populate a field in another feature class or nonspatial table, that field must have a different name.</li>
+				</ul>
+        </div>		
+		<div class="white-bg">
+			<h2>Fields <a href="database-design.html#typeFields"><i class="fas fa-external-link-alt"></i></a></h2>
+				<p>Most feature classes in the GeMS schema contain the fields Type, Label, and Symbol; however the MapUnitPolys polygon feature class contains the field MapUnit in lieu of the Type field.</p>
+				<ul>
+					<li>The Type field specifies what kind of feature is represented.</li>
+					<li>The MapUnit field specifies what map unit is represented.</li>
+					<li>The Label field contains the desired annotation for a feature. It may be simple text or – in the MapUnitPolys feature class- it may be equivalent of the map-unit label; it may have the same value as MapUnit and have an appended “?” if IdentityConfidence is “questionable”, but it will differ if a special font is used for geologic age symbols (for example, “&Hat;du”, which results in the map-unit symbol Triassic Symbol when displayed with the FGDCGeoAge font.</li>
+					<li>The Symbol field specifies either a point symbol (sometimes called a marker symbol), a line symbol, or an area-fill symbol (a color and (or) pattern fill) for the feature.</li>
+				</ul>
+        </div>		
+		<div class="white-bg">
+			<h2>What goes where? <a href="database-design.html#whatWhere"><i class="fas fa-external-link-alt"></i></a></h2>
+				<p>Map-unit polygons are bounded by contacts, faults, shorelines, snowfield or glacier boundaries, scratch boundaries, and/or the map boundary. Contacts do not normally separate polygons of the same map unit, although faults commonly do. In addition, a map-unit polygon may be partly bisected by a fault whose trace terminates within that polygon.</p>
+				<p>The distribution of units on a particular map is recorded in the polygon feature class MapUnitPolys. Contacts that separate map units, faults that bound map units, and dangling faults are recorded in the line feature class ContactsAndFaults.</p>
+				<p>Some maps show contacts and faults that are concealed beneath covering map units (for example, beneath thin surficial deposits or open water). These concealed contacts and faults are recorded in the line feature class ContactsAndFaults, and their concealed status should be encoded as IsConcealed = “Y”. Such concealed contacts and faults may or may not be involved in topology with MapUnit polygons; in addition, concealed contacts and faults may dangle.</p>
+				<p>Many geologic maps contain other feature classes that are not involved fully in map topology (for example, fossil localities, fold axes, or bedding-orientation measurements). Feature classes for such features are described in the “As-Needed Elements” section.</p>
+        </div>		
+		<div class="white-bg">
+			<h2>Directional Lines <a href="database-design.html#directionalLines"><i class="fas fa-external-link-alt"></i></a></h2>
+				<p>Many types of geologic lines have directionality, equivalent to handedness. Examples are thrust faults, which (by convention) have sawteeth on the side of the upper (overlying) plate, and normal faults, which (also by convention) have half-circle or ball-and-bar decorations on the downthrown (overlying) side of the fault. The direction that the decorations point indicates the geometry of that feature.</p>
+				<p>To preserve this directionality in the database, we subscribe to the right-hand rule for such line features: that is, lines should be created or edited such that the decoration points to the right while one travels from the start of the line segment to its end. In the case of up-down (U–D) notation on faults, the direction that has the right side of the fault in the down (D) direction should be considered as the right-hand direction.</p>
+        </div>		
+		<div class="white-bg">
+			<h2>Symbolization <a href="symbolization.html"><i class="fas fa-external-link-alt"></i></a></h2>
+				<p>It is required that geologic-map databases include symbols and symbolization instructions to achieve a preferred visualization of the map. In GeMS, symbolization consists of (1) values of Symbol for all features (use null values where a database feature is not symbolized on the map), (2) an ArcGIS .style file that contains the symbols (for areas, lines, and points) used on the preferred visualization, and (3) an Esri map-composition (.mxd) file. Alternatively, authors may choose to use Esri’s cartographic representations to symbolize one or more of the map’s layers, in which case a .style file may not be needed.</p>
+				<p>Generally speaking (and to the extent that it is possible), line and point symbolization should follow the FGDC Digital Cartographic Standard for Geologic Map Symbolization (FGDC, 2006). Most of the symbols in the FGDC cartographic standard have been implemented as an ArcGIS .style file (“FGDC_GSC_20100414.style”). Note that both the .style file and all its associated font files need to be installed for the .style file to function correctly. Note also that, to use this .style file, it is necessary to left-pad the original FGDC symbol identifiers with zeroes so that each part of the identifier has a two- or three character width (for example, symbol 1.1.3 becomes 01.01.03, and symbol 1.1.25 becomes 01.01.25).</p>
+				<p>Although not a requirement, CMYK color fills for map-unit polygons may be selected from the FGDC cartographic standard’s CMYK Color Chart (FGDC, 2006). An ArcGIS .style file (“FGDCcmyk.style”) of this chart is available.</p>
+				<p>Also not a requirement, geologic age symbol characters are best displayed using the FGDCGeoAge font (U.S. Geological Survey, 2006). The OpenType version (“FGDCGeoAge.otf”) of this font is recommended.</p>
+				<p>If the FGDC cartographic standard does not define a suitable symbol for a particular feature on a map, the standard may be supplemented with either customized symbols or with FGDC symbols that have been repurposed for the map. Such repurposed symbols need to be identified in the RepurposedSymbols table, which is required if FGDC symbols have been repurposed.</p>
+        </div>		
+		<div class="white-bg">
+			<h2>Elements <a href="database-design.html"><i class="fas fa-external-link-alt"></i></a></h2>
+				<p><span class="greenBackground"><a href="required.html">Required</a></span>, <span class="yellowBackground"><a href="as-needed.html">as-needed</a></span>, and <a href="appendix-two.html">optional</a> contents of a GeMS-structured database. As-needed elements must be present in the database if they are part of the content of a map report. Optional elements may or may not be present, at the discretion of the author and publisher.</p>
+					<ul>
+						<li><a href="appendix-two.html#cmu">CorrelationOfMapUnits</a></li>
+							<ul>
+								<li>CMULines</li>
+								<li>CMUMapUnitPolys</li>
+								<li>CMUPoints</li>
+							</ul>
+						<li><a href="appendix-two.html#crossSection">CrossSectionA</a></li>
+							<ul>
+								<li>CSAContactsAndFaults</li>
+								<li>CSAMapUnitPolys</li>
+								<li>CSAOrientationPoints</li>
+							</ul>
+						<li><span class="greenBackground"><a href="required.html#geologicmap">GeologicMap</a></span></li>
+							<ul>
+								<li><span class="yellowBackground"><a href="as-needed.html#cartographiclines">CartographicLines</a></span></li>
+								<li><span class="greenBackground"><a href="required.html#contactsandfaults">ContactsAndFaults</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#datasourcepolys">DataSourcePolys</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#guidelines">FossilPoints</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#guidelines">GenericPoints</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#geochronpoints">GeochronPoints</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#geologiclines">GeologicLines</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#mapunitlines">MapUnitLines</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#overlayPoly">MapUnitOverlayPolys</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#mapunitpoints">MapUnitPoints</a></span></li>
+								<li><span class="greenBackground"><a href="required.html#mapunitpoly">MapUnitPolys</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#orientationpoints">OrientationPoints</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#overlayPoly">OverlayPolys</a></span></li>
+								<li><span class="yellowBackground"><a href="as-needed.html#stations">Stations</a></span></li>						
+							</ul>
+						<li><span class="greenBackground"><a href="required.html#descriptionOfMapUnits">DescriptionOfMapUnits</a></span></li>
+						<li><span class="greenBackground"><a href="required.html#dataSources">DataSources</a></span></li>
+						<li><span class="greenBackground"><a href="required.html#geoMaterialDict">GeoMaterialDict</a></span></li>
+						<li><span class="greenBackground"><a href="required.html#glossary">Glossary</a></span></li>
+						<li><a href="appendix-two.html#collars">MiscellaneousMapInformation</a></li>
+						<li><span class="yellowBackground"><a href="symbolization.html#repurposedSymbols">RepurposedSymbols</a></span></li>
+						<li><a href="appendix-two.html#standardLith">StandardLithology</a></li>
+					</ul>
+        </div>				
+	</div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center">     	
+				<p><strong>Links</strong><br>
+					<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">National Geologic Map Database "GeMS" Site</a>
+					<br><a href="https://pubs.er.usgs.gov/publication/tm11B10" target="_blank">GeMS (Geologic Map Schema) Report</a></p>
+                </div>
+				<div class="col-lg-6 text-center">                
+                    <a href="https://www.usgs.gov/" target="_blank"><img src="images/USGSlogo.png" alt="usgs-logo" class="img-fluid my-3 footer-logo mr-4"></a>
+					<a href="https://www.stategeologists.org/" target="_blank"><img src="images/AASGlogo.png" alt="aasg-logo" class="img-fluid my-3 footer-logo"></a>
+                    <p class="mt-3">Copyright © 
+                        <script type="text/javascript">
+                            document.write(new Date().getFullYear());
+                        </script>
+                    </p>
+                </div>
+            
+            </div>
+            
+        </div>        
+    </footer>
+	<a href="#top">
+        <div id="backup">
+            Back to Top &uarr;
+            <span class="sr-only">Go back to top of page.</span>
+        </div>
+    </a>  
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>  
+	
+	<script>
+    $(document).ready(function(){
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $('#backup:hidden').stop(true, true).fadeIn();
+            } else {
+                $('#backup').stop(true, true).fadeOut();
+            }
+        });
+
+        $('a[href^="#"]').on('click',function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 900, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    });
+    </script>
+	
+  </body>
+
+</html>
